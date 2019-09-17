@@ -17,6 +17,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { environment } from 'src/environments/environment';
 import { MaterialModule } from './material/material.module';
 import { HeaderComponent } from 'src/app/parts/header/header.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -31,7 +32,8 @@ import { HeaderComponent } from 'src/app/parts/header/header.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,
