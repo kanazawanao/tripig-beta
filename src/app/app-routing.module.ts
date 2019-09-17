@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./tabs/tabs.module').then(m => m.TabsPageModule),
+      import('./user-info/user-info.module').then(m => m.UserInfoModule),
     canActivate: [AuthGuard]
   },
   {

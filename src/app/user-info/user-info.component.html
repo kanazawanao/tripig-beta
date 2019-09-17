@@ -1,0 +1,46 @@
+<form #userForm="ngForm" class="form">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="email"
+      placeholder="email"
+      [(ngModel)]="user.email"
+      name="email"
+      required
+      #email="ngModel"
+    />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      placeholder="name"
+      [(ngModel)]="user.displayName"
+      name="displayName"
+      required
+      #displayName="ngModel"
+    />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      placeholder="profile"
+      [(ngModel)]="user.profile"
+      name="profile"
+      required
+      #profile="ngModel"
+    />
+  </mat-form-field>
+  <button
+    mat-button
+    type="button"
+    (click)="update()"
+    [disabled]="userForm.invalid"
+    aria-label="updateUserInfo"
+  >
+    <mat-icon>done</mat-icon>
+    update
+  </button>
+</form>
+  
