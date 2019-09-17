@@ -1,0 +1,23 @@
+<form #userGroupJoinForm="ngForm" class="form">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      placeholder="group id"
+      [(ngModel)]="groupIdText"
+      name="groupId"
+      required
+      #groupId="ngModel"
+    />
+  </mat-form-field>
+  <button
+    mat-button
+    type="button"
+    (click)="join()"
+    [disabled]="userGroupJoinForm.invalid"
+    aria-label="joinGroup"
+  >
+    <mat-icon>person_add</mat-icon>
+    join
+  </button>
+</form>

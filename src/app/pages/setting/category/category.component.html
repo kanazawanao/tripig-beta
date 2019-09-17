@@ -1,0 +1,43 @@
+<div cdkDropList class="list form" (cdkDropListDropped)="drop($event)">
+  <h1>category</h1>
+  <div
+    class="box"
+    *ngFor="let categoryName of categories.category; let i = index"
+    cdkDrag
+    [cdkDragStartDelay]="200"
+  >
+    {{ categoryName }}
+    <button
+      matSuffix
+      mat-icon-button
+      type="button"
+      (click)="delete(i)"
+      aria-label="deleteCategory">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+
+<form #categoryForm="ngForm" class="form">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      placeholder="category"
+      [(ngModel)]="categoryText"
+      name="category"
+      required
+      #category="ngModel"
+    />
+  </mat-form-field>
+  <button
+    mat-button
+    type="button"
+    (click)="regist()"
+    [disabled]="categoryForm.invalid"
+    aria-label="registCategory"
+  >
+    <mat-icon>done</mat-icon>
+    regist
+  </button>
+</form>

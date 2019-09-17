@@ -1,0 +1,54 @@
+<form #placeForm="ngForm" class="form">
+  <mat-form-field class="full-width">
+    <mat-icon matPrefix>location_city</mat-icon>
+    <input
+      matInput
+      type="text"
+      placeholder="place"
+      [(ngModel)]="selectedPlace.place"
+      name="place"
+      required
+      #place="ngModel"
+    />
+  </mat-form-field>
+  <app-select-prefectures [place]="selectedPlace"></app-select-prefectures>
+  <mat-form-field class="full-width">
+    <mat-icon matPrefix>map</mat-icon>
+    <input
+      matInput
+      type="text"
+      placeholder="addr"
+      [(ngModel)]="selectedPlace.addr"
+      name="addr"
+    />
+    <a matSuffix [href]="googleMapLink">
+      <mat-icon>location_on</mat-icon>
+    </a>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-icon matPrefix>money</mat-icon>
+    <input
+      matInput
+      type="number"
+      placeholder="price"
+      [(ngModel)]="selectedPlace.price"
+      name="price"
+    />
+  </mat-form-field>
+  <app-select-category [place]="selectedPlace"></app-select-category>
+  <app-select-group [place]="selectedPlace"></app-select-group>
+  <app-business-hours [place]="selectedPlace"></app-business-hours>
+  <mat-checkbox [(ngModel)]="selectedPlace.went" name="went">went</mat-checkbox>
+  <div>
+    <button
+      mat-button
+      type="button"
+      (click)="onClick()"
+      [disabled]="placeForm.invalid"
+      aria-label="exeProc"
+    >
+      <mat-icon>done</mat-icon>
+      {{ processName }}
+    </button>
+  </div>
+</form>

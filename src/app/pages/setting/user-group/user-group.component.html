@@ -1,0 +1,57 @@
+<div cdkDropList class="list form" (cdkDropListDropped)="drop($event)">
+  <h1>userGroup</h1>
+  <div
+    *ngFor="let userGroup of userGroups.userGroup; let i = index"
+    cdkDrag
+    [cdkDragStartDelay]="200">
+    <mat-card>
+      <mat-card-title>
+        {{ userGroup.groupName }}
+      </mat-card-title>
+      <mat-card-content *ngIf="userGroup.admin">
+        id: {{ userGroup.id }}
+        <button
+          mat-icon-button
+          type="button"
+          matTooltip="Copy"
+          (click)="copyToClipboard(userGroup.id)"
+          aria-label="copyToClipboard">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          matSuffix
+          mat-icon-button
+          type="button"
+          (click)="delete(i)"
+          aria-label="deleteGropup">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<form #userGroupForm="ngForm" class="form">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      placeholder="group name"
+      [(ngModel)]="groupNameText"
+      name="groupName"
+      required
+      #groupName="ngModel"
+    />
+  </mat-form-field>
+  <button
+    mat-button
+    type="button"
+    (click)="regist()"
+    [disabled]="userGroupForm.invalid"
+    aria-label="registGropup"
+  >
+    <mat-icon>add</mat-icon>
+    regist
+  </button>
+</form>

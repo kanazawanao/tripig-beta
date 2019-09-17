@@ -1,0 +1,26 @@
+<mat-accordion class="full-width headers-align">
+  <mat-expansion-panel *ngFor="let place of places$ | async">
+    <mat-expansion-panel-header>
+      <button
+        mat-icon-button
+        type="button"
+        (click)="delete($event, place)"
+        aria-label="deletePlace">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <mat-panel-title>
+        <mat-checkbox
+          name="destination"
+          (click)="addDestinationClick($event, place)"
+        ></mat-checkbox>
+        <mat-icon matPrefix>edit_location</mat-icon>
+        {{ place.place }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-place-detail
+      [selectedPlace]="place"
+      [processName]="processName"
+      (processing)="update($event)"
+    ></app-place-detail>
+  </mat-expansion-panel>
+</mat-accordion>

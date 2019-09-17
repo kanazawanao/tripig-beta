@@ -1,0 +1,14 @@
+<mat-form-field class="full-width">
+  <mat-icon matPrefix>public</mat-icon>
+  <mat-label>prefecture</mat-label>
+  <mat-select [(ngModel)]="place.prefecture" name="prefecture">
+    <mat-optgroup *ngFor="let group of ariaGroups" [label]="group.aria">
+      <mat-option
+        *ngFor="let prefecture of group.prefectures"
+        [value]="prefecture.name"
+      >
+        {{ prefecture.name }}
+      </mat-option>
+    </mat-optgroup>
+  </mat-select>
+</mat-form-field>

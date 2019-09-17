@@ -13,7 +13,17 @@ const routes: Routes = [
     path: 'signIn',
     loadChildren: () =>
       import('./sign-in/sign-in.module').then(m => m.SignInModule)
-  }
+  },
+  {
+    path: 'place',
+    loadChildren: () => import('./pages/place/place.module').then(m => m.PlaceModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'setting',
+    loadChildren: () => import('./pages/setting/setting.module').then(m => m.SettingModule),
+    canActivate: [AuthGuard]
+  },
 ];
 @NgModule({
   imports: [

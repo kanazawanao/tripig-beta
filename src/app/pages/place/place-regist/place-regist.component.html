@@ -1,0 +1,9 @@
+<div class="form">
+  <h1>add</h1>
+  <app-place-detail
+    [selectedPlace]="place"
+    [processName]="processName"
+    (processing)="regist($event)"
+  ></app-place-detail>
+  <app-map [place]="place"></app-map>
+</div>

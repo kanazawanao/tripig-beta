@@ -1,0 +1,63 @@
+<div class="form">
+  <h1>list</h1>
+  <app-filter
+    [placeSearchCondition]="placeSearchCondition"
+    [prefectures]="prefectures"
+    (selectAria)="selectAria($event)"
+  >
+  </app-filter>
+
+  <button
+    mat-button
+    type="button"
+    (click)="search()"
+    aria-label="searchPlaces">
+    <mat-icon>search</mat-icon>
+    search
+  </button>
+  <button
+    mat-button
+    type="button"
+    (click)="random()"
+    aria-label="randomPlace">
+    <mat-icon>find_replace</mat-icon>
+    random
+  </button>
+  <button
+    mat-button
+    type="button"
+    (click)="clear()"
+    aria-label="clear">
+    <mat-icon>clear_all</mat-icon>
+    clear
+  </button>
+
+  <app-place-list
+    [places$]="places$"
+    [destinations]="destinations"
+    (updatePlaceEvent)="update($event)"
+    (deletePlaceEvent)="delete($event)"
+    (addDestinationEvent)="addDestination($event)"
+  ></app-place-list>
+
+  <div *ngIf="selectedPlace">
+    <app-place-detail
+      [selectedPlace]="selectedPlace"
+      [processName]="processName"
+      (processing)="update($event)"
+    ></app-place-detail>
+  </div>
+  <button
+    mat-button
+    type="button"
+    (click)="createRoot()"
+    aria-label="createRoot">
+    <mat-icon>map</mat-icon>
+    root
+  </button>
+  <div *ngIf="canCreateRoot">
+    <app-place-destinations
+      [destinations]="destinations"
+    ></app-place-destinations>
+  </div>
+</div>

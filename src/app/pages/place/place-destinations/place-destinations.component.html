@@ -1,0 +1,14 @@
+<div cdkDropList class="list form" (cdkDropListDropped)="drop($event)">
+  <h1>destinations</h1>
+  <div
+    class="box"
+    *ngFor="let destination of destinations; let i = index"
+    cdkDrag
+    [cdkDragStartDelay]="200"
+  >
+    {{ destination.place }}
+  </div>
+</div>
+<a matSuffix [href]="googleMapLinks">
+  <mat-icon>location_on</mat-icon>
+</a>

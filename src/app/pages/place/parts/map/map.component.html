@@ -1,0 +1,23 @@
+<form #placeSearchForm="ngForm" class="form">
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      placeholder="place search"
+      [(ngModel)]="placeText"
+      name="place"
+      required
+      #place="ngModel"
+    />
+  </mat-form-field>
+  <button
+    mat-button
+    type="button"
+    (click)="search()"
+    [disabled]="placeSearchForm.invalid"
+    aria-label="search"
+  >
+    <mat-icon>search</mat-icon>
+    search
+  </button>
+</form>
+<div #mapWrapper id="map"></div>
