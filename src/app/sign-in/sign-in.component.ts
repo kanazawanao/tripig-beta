@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/firestore/auth.service';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Platform } from '@ionic/angular';
+import * as firebase from 'firebase/app';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,7 +15,14 @@ import { AuthService } from '../services/firestore/auth.service';
 export class SignInComponent implements OnInit {
   emailText = '';
   passwordText = '';
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private router: Router,
+    private gplus: GooglePlus,
+    private auth: AuthService,
+    private angularFireAuth: AngularFireAuth,
+    private platform: Platform
+  ) {}
 
   ngOnInit() {
     this.auth.user.subscribe(user => {
@@ -27,8 +39,30 @@ export class SignInComponent implements OnInit {
   }
 
   googleSignIn() {
-    this.auth.googleSignIn().then(() => {
-      this.router.navigate(['/']);
-    });
+    if (this.platform.is('cordova')) {
+      // Cordova環境でのみGooglePlusプラグインでログインする
+      this.nativeGoogleLogin().then(() => {
+        this.router.navigate(['/']);
+      });
+    } else {
+      this.auth.googleSignIn().then(() => {
+        this.router.navigate(['/']);
+      });
+    }
+  }
+  async nativeGoogleLogin(): Promise<any> {
+    try {
+      const gplusUser = await this.gplus.login({
+        webClientId: environment.webClientId,
+        offline: true,
+        scopes: 'profile email'
+      });
+
+      return await this.afAuth.auth.signInWithCredential(
+        firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)
+      );
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
