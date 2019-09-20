@@ -25,13 +25,16 @@ export class MapComponent implements OnInit {
   search() {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: this.placeText }, (result, status) => {
-      this.setMap(result[0].geometry.location);
-      console.log(result);
-      this.place.place = this.placeText;
-      this.place.addr = result[0].formatted_address;
-      this.place.prefecture = result[0].address_components.filter((component) => {
-        return component.types.indexOf('administrative_area_level_1') > -1;
-      })[0].long_name;
+      if(status === google.maps.GeocoderStatus.OK){
+        this.setMap(result[0].geometry.location);
+        console.log(result);
+        this.place.place = this.placeText;
+        this.place.category = result[0].types;
+        this.place.addr = result[0].formatted_address;
+        this.place.prefecture = result[0].address_components.filter((component) => {
+          return component.types.indexOf('administrative_area_level_1') > -1;
+        })[0].long_name;
+      }
     });
   }
 
@@ -47,6 +50,18 @@ export class MapComponent implements OnInit {
     this.marker = new google.maps.Marker({
       position: latLng,
       map: this.map
+    });
+
+    const placeService = new google.maps.places.PlacesService(this.map);
+    const request: google.maps.places.PlaceSearchRequest = {
+      location: latLng,
+      radius: 500,
+      type: 'cafe'
+    }
+    placeService.nearbySearch(request, (results, status) => {
+      if(status === google.maps.places.PlacesServiceStatus.OK) {
+        results.forEach(r => console.log(r));
+      }
     });
   }
 }
