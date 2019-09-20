@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Place } from 'src/app/models/place';
 import { PlaceType, PLACETYPES } from './place-types';
+import { PRICELEVELS, PriceLevel } from './price-level';
 
 @Component({
   selector: 'app-map',
@@ -19,10 +20,10 @@ export class MapComponent implements OnInit {
   map?: google.maps.Map;
   marker?: google.maps.Marker;
   placeText = '';
-  options = PLACETYPES;
-  selected: PlaceType = new PlaceType();
-  maxPrice = 0;
-  max = 10000;
+  placeOptions = PLACETYPES;
+  priceOptions = PRICELEVELS;
+  placeSelected: PlaceType = new PlaceType();
+  priceSelected: PriceLevel = new PriceLevel();
   constructor() {}
   ngOnInit() {}
 
@@ -54,25 +55,29 @@ export class MapComponent implements OnInit {
       position: latLng,
       map: this.map
     });
+    // this.searchPlace(latLng);
   }
 
   searchPlace(latLng: google.maps.LatLng) {
     if(this.map){
       const placeService = new google.maps.places.PlacesService(this.map);
       const request: google.maps.places.PlaceSearchRequest = {
-        maxPriceLevel: this.maxPrice,
+        minPriceLevel: 0,
+        maxPriceLevel: this.priceSelected.cd,
         rankBy: google.maps.places.RankBy.PROMINENCE,
         location: latLng,
         radius: 500,
-        type: this.selected.cd
+        type: this.placeSelected.cd
       }
       placeService.nearbySearch(request, (results, status) => {
         if(status === google.maps.places.PlacesServiceStatus.OK) {
           for(const result of results){
+            console.log('name: ' + result.name);
             console.log('opening_hours: ' + result.opening_hours);
             console.log('rating: ' + result.rating);
             console.log('reviews: ' + result.reviews);
             console.log('icon: ' + result.icon);
+            console.log('price_level: ' + result.price_level);
           }
         }
       });
