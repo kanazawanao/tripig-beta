@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Place } from 'src/app/models/place';
+import { PlaceType, PLACETYPES } from './place-types';
 
 @Component({
   selector: 'app-map',
@@ -18,7 +19,8 @@ export class MapComponent implements OnInit {
   map?: google.maps.Map;
   marker?: google.maps.Marker;
   placeText = '';
-
+  options = PLACETYPES;
+  selected: PlaceType = new PlaceType();
   constructor() {}
   ngOnInit() {}
 
@@ -27,7 +29,6 @@ export class MapComponent implements OnInit {
     geocoder.geocode({ address: this.placeText }, (result, status) => {
       if(status === google.maps.GeocoderStatus.OK){
         this.setMap(result[0].geometry.location);
-        console.log(result);
         this.place.place = this.placeText;
         this.place.category = result[0].types;
         this.place.addr = result[0].formatted_address;
@@ -56,7 +57,7 @@ export class MapComponent implements OnInit {
     const request: google.maps.places.PlaceSearchRequest = {
       location: latLng,
       radius: 500,
-      type: 'cafe'
+      type: this.selected.cd
     }
     placeService.nearbySearch(request, (results, status) => {
       if(status === google.maps.places.PlacesServiceStatus.OK) {
