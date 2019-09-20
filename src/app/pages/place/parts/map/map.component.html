@@ -7,6 +7,15 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-slider
+    [step]="step"
+    [max]="max"
+    [(ngModel)]="maxPrice"
+    name="slider">
+  </mat-slider>
+  {{maxPrice}}
+
   <mat-form-field class="example-full-width">
     <input
       matInput

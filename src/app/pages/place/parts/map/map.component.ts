@@ -21,6 +21,8 @@ export class MapComponent implements OnInit {
   placeText = '';
   options = PLACETYPES;
   selected: PlaceType = new PlaceType();
+  maxPrice = 0;
+  max = 10000;
   constructor() {}
   ngOnInit() {}
 
@@ -52,17 +54,28 @@ export class MapComponent implements OnInit {
       position: latLng,
       map: this.map
     });
+  }
 
-    const placeService = new google.maps.places.PlacesService(this.map);
-    const request: google.maps.places.PlaceSearchRequest = {
-      location: latLng,
-      radius: 500,
-      type: this.selected.cd
-    }
-    placeService.nearbySearch(request, (results, status) => {
-      if(status === google.maps.places.PlacesServiceStatus.OK) {
-        results.forEach(r => console.log(r));
+  searchPlace(latLng: google.maps.LatLng) {
+    if(this.map){
+      const placeService = new google.maps.places.PlacesService(this.map);
+      const request: google.maps.places.PlaceSearchRequest = {
+        maxPriceLevel: this.maxPrice,
+        rankBy: google.maps.places.RankBy.PROMINENCE,
+        location: latLng,
+        radius: 500,
+        type: this.selected.cd
       }
-    });
+      placeService.nearbySearch(request, (results, status) => {
+        if(status === google.maps.places.PlacesServiceStatus.OK) {
+          for(const result of results){
+            console.log('opening_hours: ' + result.opening_hours);
+            console.log('rating: ' + result.rating);
+            console.log('reviews: ' + result.reviews);
+            console.log('icon: ' + result.icon);
+          }
+        }
+      });
+    }
   }
 }
