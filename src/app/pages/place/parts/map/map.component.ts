@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
   search() {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: this.placeText }, (result, status) => {
-      if(status === google.maps.GeocoderStatus.OK){
+      if (status === google.maps.GeocoderStatus.OK) {
         this.setMap(result[0].geometry.location);
         this.place.place = this.placeText;
         this.place.category = result[0].types;
@@ -59,7 +59,7 @@ export class MapComponent implements OnInit {
   }
 
   searchPlace(latLng: google.maps.LatLng) {
-    if(this.map){
+    if (this.map) {
       const placeService = new google.maps.places.PlacesService(this.map);
       const request: google.maps.places.PlaceSearchRequest = {
         minPriceLevel: 0,
@@ -68,10 +68,10 @@ export class MapComponent implements OnInit {
         location: latLng,
         radius: 500,
         type: this.placeSelected.cd
-      }
+      };
       placeService.nearbySearch(request, (results, status) => {
-        if(status === google.maps.places.PlacesServiceStatus.OK) {
-          for(const result of results){
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (const result of results) {
             console.log('name: ' + result.name);
             console.log('opening_hours: ' + result.opening_hours);
             console.log('rating: ' + result.rating);

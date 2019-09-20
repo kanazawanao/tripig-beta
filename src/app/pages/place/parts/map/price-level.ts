@@ -24,4 +24,4 @@ export const PRICELEVELS: PriceLevel[] = [
     cd: 4,
     level: 'Very Expensive'
   }
-]
+];

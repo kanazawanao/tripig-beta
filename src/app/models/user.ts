@@ -1,6 +1,6 @@
 export class User {
-  uid: string = '';
-  email: string = '';
+  uid = '';
+  email = '';
   displayName?: string;
   photoURL?: string;
   profile?: string;

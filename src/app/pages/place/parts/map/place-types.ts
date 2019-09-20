@@ -363,4 +363,4 @@ export const PLACETYPES: PlaceType[] = [
     cd: 'zoo',
     name: '動物園'
   },
-]
+];
