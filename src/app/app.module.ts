@@ -18,10 +18,10 @@ import { AppComponent } from 'src/app/app.component';
 import { AuthGuard } from 'src/app/guard/auth.guard';
 import { environment } from 'src/environments/environment';
 import { MaterialModule } from 'src/app/material/material.module';
-import { PartsModule } from 'src/app/parts/parts.module';
+import { HeaderComponent } from 'src/app/parts/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HeaderComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -37,7 +37,6 @@ import { PartsModule } from 'src/app/parts/parts.module';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
-    PartsModule,
   ],
   providers: [
     GooglePlus,
