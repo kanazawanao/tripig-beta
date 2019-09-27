@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { GroupService } from 'src/app/services/firestore/group.service';
 import { UserGroups } from 'src/app/models/user-group';
 import { Observable, Subscription } from 'rxjs';
 import { UserGroupService } from 'src/app/services/firestore/user-group.service';

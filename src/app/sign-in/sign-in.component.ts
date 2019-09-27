@@ -20,7 +20,6 @@ export class SignInComponent implements OnInit {
     private router: Router,
     private gplus: GooglePlus,
     private auth: AuthService,
-    private angularFireAuth: AngularFireAuth,
     private platform: Platform
   ) {}
 
