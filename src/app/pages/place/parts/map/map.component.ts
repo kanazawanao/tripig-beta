@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, OnInit } from '@angular/core';
 import { Place } from 'src/app/models/place';
 import { PlaceType, PLACETYPES } from './place-types';
 import { PRICELEVELS, PriceLevel } from './price-level';
@@ -19,11 +13,13 @@ export class MapComponent implements OnInit {
   @ViewChild('mapWrapper', { static: false }) mapElement!: ElementRef;
   map?: google.maps.Map;
   marker?: google.maps.Marker;
+  nextPageToken = '';
   placeText = '';
   placeOptions = PLACETYPES;
   priceOptions = PRICELEVELS;
   placeSelected: PlaceType = new PlaceType();
   priceSelected: PriceLevel = new PriceLevel();
+  results?: google.maps.places.PlaceResult[];
   constructor() {}
   ngOnInit() {}
 
@@ -35,9 +31,11 @@ export class MapComponent implements OnInit {
         this.place.place = this.placeText;
         this.place.category = result[0].types;
         this.place.addr = result[0].formatted_address;
-        this.place.prefecture = result[0].address_components.filter((component) => {
-          return component.types.indexOf('administrative_area_level_1') > -1;
-        })[0].long_name;
+        this.place.prefecture = result[0].address_components.filter(
+          component => {
+            return component.types.indexOf('administrative_area_level_1') > -1;
+          }
+        )[0].long_name;
       }
     });
   }
@@ -55,7 +53,7 @@ export class MapComponent implements OnInit {
       position: latLng,
       map: this.map
     });
-    // this.searchPlace(latLng);
+    this.searchPlace(latLng);
   }
 
   searchPlace(latLng: google.maps.LatLng) {
@@ -71,14 +69,17 @@ export class MapComponent implements OnInit {
       };
       placeService.nearbySearch(request, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (const result of results) {
-            console.log('name: ' + result.name);
-            console.log('opening_hours: ' + result.opening_hours);
-            console.log('rating: ' + result.rating);
-            console.log('reviews: ' + result.reviews);
-            console.log('icon: ' + result.icon);
-            console.log('price_level: ' + result.price_level);
-          }
+          this.results = results;
+          // for (const result of results) {
+          //   console.log('------------------------------------');
+          //   console.log(JSON.stringify(result));
+          //   console.log('name: ' + result.name);
+          //   console.log('opening_hours: ' + result.opening_hours);
+          //   console.log('rating: ' + result.rating);
+          //   console.log('reviews: ' + result.reviews);
+          //   console.log('icon: ' + result.icon);
+          //   console.log('price_level: ' + result.price_level);
+          // }
         }
       });
     }
