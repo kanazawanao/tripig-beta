@@ -7,17 +7,24 @@ import { Place } from '../../models/place';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Prefecture } from 'src/app/pages/place/parts/prefecture/prefecture';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlaceService {
   private collection: AngularFirestoreCollection<Place>;
-  constructor(private afStore: AngularFirestore) {
-    this.collection = this.afStore.collection<Place>('places');
+  userId = '';
+  constructor(private auth: AuthService, private afStore: AngularFirestore) {
+    this.userId = this.auth.userId;
+    this.collection = this.afStore
+      .collection('users')
+      .doc(this.userId)
+      .collection<Place>('places');
   }
 
   addPlace(place: Place): void {
+    console.log(place);
     const id = (place.id = this.afStore.createId());
     this.collection
       .doc(id)
@@ -40,27 +47,31 @@ export class PlaceService {
       .pipe(map(p => p.filter(i => i.uId === userId)));
   }
 
-  searchPlaces(condition: Place, prefectures: Prefecture[]): Observable<Place[]> {
-    return this.collection.valueChanges().pipe(
-      map(p =>
-        p.filter(
-          i =>
-            (prefectures.length === 0 ||
-              i.prefecture === '' ||
-              prefectures.find(pre => i.prefecture.indexOf(pre.name) !== -1)) &&
-            (condition.category.length === 0 ||
-              i.category.length === 0 ||
-              condition.category.find(c => i.category.indexOf(c) !== -1)) &&
-            // TODO: 時間の検索方法は見直しが必要。
-            (!condition.open || !i.open || condition.open <= i.open) &&
-            (!condition.close || !i.close || condition.close >= i.close) &&
-            i.went === condition.went &&
-            (condition.gid == null || condition.gid === ''
-              ? i.uId === condition.uId
-              : condition.gid === i.gid)
+  searchPlaces(
+    condition: Place,
+    prefectures: Prefecture[]
+  ): Observable<Place[]> {
+    return this.collection
+      .valueChanges()
+      .pipe(
+        map(p =>
+          p.filter(
+            i =>
+              (prefectures.length === 0 ||
+                i.prefecture === '' ||
+                prefectures.find(
+                  pre => i.prefecture.indexOf(pre.name) !== -1
+                )) &&
+              (condition.category.length === 0 ||
+                i.category.length === 0 ||
+                condition.category.find(c => i.category.indexOf(c) !== -1)) &&
+              i.went === condition.went &&
+              (condition.gid == null || condition.gid === ''
+                ? i.uId === condition.uId
+                : condition.gid === i.gid)
+          )
         )
-      )
-    );
+      );
   }
 
   deletePlace(place: Place) {

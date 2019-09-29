@@ -1,8 +1,13 @@
 <div class="form">
-  <!-- <app-place-detail
-    [selectedPlace]="place"
-    [processName]="processName"
-    (processing)="regist($event)"
-  ></app-place-detail> -->
-  <app-map [place]="place"></app-map>
+  <app-map
+    [place]="place"
+    [results]="results"
+    (setEvent)="placeSet($event)"
+    (searchEvent)="resultsSet($event)"
+  ></app-map>
+  <button mat-button type="button" (click)="regist()" aria-label="regist">
+    <mat-icon>done</mat-icon>
+    regist
+  </button>
+  <app-search-result [results]="results"></app-search-result>
 </div>

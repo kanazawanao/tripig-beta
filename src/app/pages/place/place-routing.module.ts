@@ -7,16 +7,16 @@ import { PlaceRegistComponent } from './place-regist/place-regist.component';
 const routes: Routes = [
   {
     path: 'placeRegist',
-    component: PlaceRegistComponent,
+    component: PlaceRegistComponent
   },
   {
     path: 'placeList',
-    component: PlaceComponent,
-  },
+    component: PlaceComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PlaceRoutingModule { }
+export class PlaceRoutingModule {}

@@ -7,14 +7,6 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <!-- <mat-form-field>
-    <mat-label>PriceLevel</mat-label>
-    <mat-select [(value)]="priceSelected">
-      <mat-option *ngFor="let option of priceOptions" [value]="option">
-        {{ option.level }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field> -->
   <mat-form-field class="example-full-width">
     <input
       matInput
@@ -37,14 +29,3 @@
   </button>
 </form>
 <div #mapWrapper id="map"></div>
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let result of results">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ result.name }}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <p>rating: {{ result.rating }}</p>
-    <p>reviews: {{ result.reviews }}</p>
-  </mat-expansion-panel>
-</mat-accordion>

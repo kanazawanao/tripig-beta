@@ -1,4 +1,12 @@
-import { Component, ElementRef, ViewChild, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { Place } from 'src/app/models/place';
 import { PlaceType, PLACETYPES } from './place-types';
 import { PRICELEVELS, PriceLevel } from './price-level';
@@ -10,6 +18,9 @@ import { PRICELEVELS, PriceLevel } from './price-level';
 })
 export class MapComponent implements OnInit {
   @Input() place: Place = new Place();
+  @Input() results?: google.maps.places.PlaceResult[];
+  @Output() searchEvent: EventEmitter<any> = new EventEmitter();
+  @Output() setEvent: EventEmitter<any> = new EventEmitter();
   @ViewChild('mapWrapper', { static: false }) mapElement!: ElementRef;
   map?: google.maps.Map;
   marker?: google.maps.Marker;
@@ -19,7 +30,6 @@ export class MapComponent implements OnInit {
   priceOptions = PRICELEVELS;
   placeSelected: PlaceType = new PlaceType();
   priceSelected: PriceLevel = new PriceLevel();
-  results?: google.maps.places.PlaceResult[];
   constructor() {}
   ngOnInit() {}
 
@@ -38,6 +48,7 @@ export class MapComponent implements OnInit {
         )[0].long_name;
       }
     });
+    this.setEvent.emit(this.place);
   }
 
   setMap(latLng: google.maps.LatLng) {
@@ -69,17 +80,7 @@ export class MapComponent implements OnInit {
       };
       placeService.nearbySearch(request, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          this.results = results;
-          // for (const result of results) {
-          //   console.log('------------------------------------');
-          //   console.log(JSON.stringify(result));
-          //   console.log('name: ' + result.name);
-          //   console.log('opening_hours: ' + result.opening_hours);
-          //   console.log('rating: ' + result.rating);
-          //   console.log('reviews: ' + result.reviews);
-          //   console.log('icon: ' + result.icon);
-          //   console.log('price_level: ' + result.price_level);
-          // }
+          this.searchEvent.emit(results);
         }
       });
     }

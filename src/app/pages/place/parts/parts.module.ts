@@ -8,6 +8,7 @@ import { SelectGroupComponent } from 'src/app/pages/place/parts/select-group/sel
 import { FilterComponent } from 'src/app/pages/place/parts/filter/filter.component';
 import { BusinessHoursComponent } from 'src/app/pages/place/parts/business-hours/business-hours.component';
 import { MapComponent } from 'src/app/pages/place/parts/map/map.component';
+import { SearchResultComponent } from 'src/app/pages/place/parts/search-result/search-result.component';
 import { MaterialModule } from 'src/app/pages/place/material/material.module';
 
 const components = [
@@ -18,19 +19,12 @@ const components = [
   SelectGroupComponent,
   SearchPrefectureComponent,
   MapComponent,
+  SearchResultComponent
 ];
 
 @NgModule({
-  declarations: [
-    components
-  ],
-  exports: [
-    components
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MaterialModule,
-  ]
+  declarations: [components],
+  exports: [components],
+  imports: [CommonModule, FormsModule, MaterialModule]
 })
-export class PartsModule { }
+export class PartsModule {}

@@ -8,6 +8,4 @@ export class Place {
   went = false;
   price = 0;
   category: string[] = [];
-  open?: Date;
-  close?: Date;
 }
