@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument
+} from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/firestore/auth.service';
 import { Observable } from 'rxjs';
 import { Category } from '../../models/category';
@@ -11,10 +15,7 @@ export class CategoryService {
   private collection: AngularFirestoreCollection<Category>;
   private document: AngularFirestoreDocument<Category>;
   private userId: string;
-  constructor(
-    private afStore: AngularFirestore,
-    private auth: AuthService
-  ) {
+  constructor(private afStore: AngularFirestore, private auth: AuthService) {
     this.userId = this.auth.userId;
     this.collection = this.afStore.collection<Category>('categories');
     this.document = this.collection.doc<Category>(`${this.userId}`);

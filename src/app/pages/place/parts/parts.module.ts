@@ -6,7 +6,6 @@ import { SearchPrefectureComponent } from 'src/app/pages/place/parts/prefecture/
 import { SelectCategoryComponent } from 'src/app/pages/place/parts/select-category/select-category.component';
 import { SelectGroupComponent } from 'src/app/pages/place/parts/select-group/select-group.component';
 import { FilterComponent } from 'src/app/pages/place/parts/filter/filter.component';
-import { BusinessHoursComponent } from 'src/app/pages/place/parts/business-hours/business-hours.component';
 import { MapComponent } from 'src/app/pages/place/parts/map/map.component';
 import { SearchResultComponent } from 'src/app/pages/place/parts/search-result/search-result.component';
 import { MaterialModule } from 'src/app/pages/place/material/material.module';
@@ -15,7 +14,6 @@ const components = [
   SelectPrefecturesComponent,
   FilterComponent,
   SelectCategoryComponent,
-  BusinessHoursComponent,
   SelectGroupComponent,
   SearchPrefectureComponent,
   MapComponent,
