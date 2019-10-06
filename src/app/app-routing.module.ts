@@ -24,6 +24,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/setting/setting.module').then(m => m.SettingModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'youtube',
+    loadChildren: () =>
+      import('./pages/youtube/youtube.module').then(m => m.YoutubeModule)
   }
 ];
 @NgModule({
