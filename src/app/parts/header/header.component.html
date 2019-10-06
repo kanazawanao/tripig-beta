@@ -1,83 +1,86 @@
-<mat-toolbar color="primary">
-  <button mat-button aria-label="motorcycle">
-    <mat-icon>motorcycle</mat-icon>
-  </button>
-  <div *ngIf="auth.loggedIn">
-    <button mat-button [matMenuTriggerFor]="menu" aria-label="menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item aria-label="list">
-      <a mat-button routerLink="place/placeList">
-        <mat-icon>list</mat-icon>
-        List
-      </a>
-    </button>
-    <button mat-menu-item aria-label="add">
-      <a mat-button routerLink="place/placeRegist">
-        <mat-icon>add_location</mat-icon>
-        Add
-      </a>
-    </button>
-  </mat-menu>
-  <div *ngIf="auth.loggedIn">
-    <button mat-button [matMenuTriggerFor]="setting" aria-label="settings">
-      <mat-icon>settings</mat-icon>
-    </button>
-  </div>
-  <mat-menu #setting="matMenu">
-    <button mat-menu-item aria-label="category">
-      <a mat-button routerLink="setting/category">
-        <mat-icon>category</mat-icon>
-        category
-      </a>
-    </button>
-    <button mat-menu-item aria-label="group">
-      <a mat-button routerLink="setting/userGroup">
-        <mat-icon>group</mat-icon>
-        group
-      </a>
-    </button>
-    <button mat-menu-item aria-label="joinGroup">
-      <a mat-button routerLink="setting/userGroupJoin">
-        <mat-icon>group_add</mat-icon>
-        join group
-      </a>
-    </button>
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="userMenu" aria-label="userMenu">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <mat-menu #userMenu="matMenu">
-    <div *ngIf="auth.loggedIn; else loggedOff">
-      <button mat-menu-item aria-label="logout">
-        <a mat-button (click)="signOut()">
-          <mat-icon>power_settings_new</mat-icon>
-          logout
-        </a>
+<ion-header>
+  <ion-toolbar>
+    <div fxLayout="row">
+      <button mat-button aria-label="motorcycle" routerLink="/">
+        <mat-icon>motorcycle</mat-icon>
       </button>
-      <button mat-menu-item aria-label="account">
-        <a mat-button routerLink="userInfo">
-          <mat-icon>face</mat-icon>
-          account
-        </a>
+      <div *ngIf="auth.loggedIn">
+        <button mat-button [matMenuTriggerFor]="menu" aria-label="menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item aria-label="list">
+          <a mat-button routerLink="place/placeList">
+            <mat-icon>list</mat-icon>
+            List
+          </a>
+        </button>
+        <button mat-menu-item aria-label="add">
+          <a mat-button routerLink="place/placeRegist">
+            <mat-icon>add_location</mat-icon>
+            Add
+          </a>
+        </button>
+      </mat-menu>
+      <div *ngIf="auth.loggedIn">
+        <button mat-button [matMenuTriggerFor]="setting" aria-label="settings">
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+      <mat-menu #setting="matMenu">
+        <button mat-menu-item aria-label="category">
+          <a mat-button routerLink="setting/category">
+            <mat-icon>category</mat-icon>
+            category
+          </a>
+        </button>
+        <button mat-menu-item aria-label="group">
+          <a mat-button routerLink="setting/userGroup">
+            <mat-icon>group</mat-icon>
+            group
+          </a>
+        </button>
+        <button mat-menu-item aria-label="joinGroup">
+          <a mat-button routerLink="setting/userGroupJoin">
+            <mat-icon>group_add</mat-icon>
+            join group
+          </a>
+        </button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="userMenu" aria-label="userMenu">
+        <mat-icon>account_circle</mat-icon>
       </button>
+      <mat-menu #userMenu="matMenu">
+        <div *ngIf="auth.loggedIn; else loggedOff">
+          <button mat-menu-item aria-label="logout">
+            <a mat-button (click)="signOut()">
+              <mat-icon>power_settings_new</mat-icon>
+              logout
+            </a>
+          </button>
+          <button mat-menu-item aria-label="account">
+            <a mat-button routerLink="userInfo">
+              <mat-icon>face</mat-icon>
+              account
+            </a>
+          </button>
+        </div>
+        <ng-template #loggedOff>
+          <button mat-menu-item aria-label="signIn">
+            <a mat-button routerLink="signIn">
+              <mat-icon>exit_to_app</mat-icon>
+              sign in
+            </a>
+          </button>
+          <button mat-menu-item aria-label="signUp">
+            <a mat-button routerLink="signUp">
+              <mat-icon>person_add</mat-icon>
+              sign up
+            </a>
+          </button>
+        </ng-template>
+      </mat-menu>
     </div>
-    <ng-template #loggedOff>
-      <button mat-menu-item aria-label="signIn">
-        <a mat-button routerLink="signIn">
-          <mat-icon>exit_to_app</mat-icon>
-          sign in
-        </a>
-      </button>
-      <button mat-menu-item aria-label="signUp">
-        <a mat-button routerLink="signUp">
-          <mat-icon>person_add</mat-icon>
-          sign up
-        </a>
-      </button>
-    </ng-template>
-  </mat-menu>
-</mat-toolbar>
-  
+  </ion-toolbar>
+</ion-header>

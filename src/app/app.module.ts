@@ -7,6 +7,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -37,6 +38,7 @@ import { HeaderComponent } from 'src/app/parts/header/header.component';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
+    FlexLayoutModule
   ],
   providers: [
     GooglePlus,

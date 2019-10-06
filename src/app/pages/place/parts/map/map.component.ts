@@ -1,11 +1,11 @@
 import {
   Component,
-  ElementRef,
-  ViewChild,
   Input,
   OnInit,
   Output,
-  EventEmitter
+  EventEmitter,
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 import { Place } from 'src/app/models/place';
 import { PlaceType, PLACETYPES } from './place-types';
@@ -38,6 +38,7 @@ export class MapComponent implements OnInit {
     geocoder.geocode({ address: this.placeText }, (result, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
         this.setMap(result[0].geometry.location);
+        this.searchPlace(result[0].geometry.location);
         this.place.place = this.placeText;
         this.place.category = result[0].types;
         this.place.addr = result[0].formatted_address;

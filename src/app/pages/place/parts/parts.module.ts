@@ -9,6 +9,7 @@ import { FilterComponent } from 'src/app/pages/place/parts/filter/filter.compone
 import { MapComponent } from 'src/app/pages/place/parts/map/map.component';
 import { SearchResultComponent } from 'src/app/pages/place/parts/search-result/search-result.component';
 import { MaterialModule } from 'src/app/pages/place/material/material.module';
+import { IonicModule } from '@ionic/angular';
 
 const components = [
   SelectPrefecturesComponent,
@@ -23,6 +24,6 @@ const components = [
 @NgModule({
   declarations: [components],
   exports: [components],
-  imports: [CommonModule, FormsModule, MaterialModule]
+  imports: [CommonModule, FormsModule, MaterialModule, IonicModule.forRoot()]
 })
 export class PartsModule {}
