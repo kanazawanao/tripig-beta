@@ -1,0 +1,26 @@
+<button mat-button (click)="close()">
+  <mat-icon>close</mat-icon>
+</button>
+<form #userForm="ngForm" class="form">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      placeholder="aria"
+      [(ngModel)]="aria.ariaName"
+      name="email"
+      required
+      #email="ngModel"
+    />
+  </mat-form-field>
+  <button
+    mat-button
+    type="button"
+    (click)="regist()"
+    [disabled]="userForm.invalid"
+    aria-label="registAria"
+  >
+    <mat-icon>done</mat-icon>
+    regist
+  </button>
+</form>

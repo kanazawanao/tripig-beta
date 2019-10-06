@@ -8,6 +8,7 @@ import { SelectGroupComponent } from 'src/app/pages/place/parts/select-group/sel
 import { FilterComponent } from 'src/app/pages/place/parts/filter/filter.component';
 import { MapComponent } from 'src/app/pages/place/parts/map/map.component';
 import { SearchResultComponent } from 'src/app/pages/place/parts/search-result/search-result.component';
+import { AriaRegistComponent } from 'src/app/pages/place/parts/aria-regist/aria-regist.component';
 import { MaterialModule } from 'src/app/pages/place/material/material.module';
 import { IonicModule } from '@ionic/angular';
 
@@ -18,7 +19,8 @@ const components = [
   SelectGroupComponent,
   SearchPrefectureComponent,
   MapComponent,
-  SearchResultComponent
+  SearchResultComponent,
+  AriaRegistComponent
 ];
 
 @NgModule({
