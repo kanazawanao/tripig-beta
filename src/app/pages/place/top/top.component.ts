@@ -33,19 +33,15 @@ export class TopComponent implements OnInit {
   async addPlace(aria: Aria) {
     const modal = await this.modalController.create({
       component: PlaceRegistComponent,
-      componentProps: {
-        'aria': aria
-      }
+      componentProps: { aria }
     });
     return await modal.present();
   }
 
-  async display(aria: Aria){
+  async display(aria: Aria) {
     const modal = await this.modalController.create({
       component: PlaceComponent,
-      componentProps: {
-        'aria': aria
-      }
+      componentProps: { aria }
     });
     return await modal.present();
   }

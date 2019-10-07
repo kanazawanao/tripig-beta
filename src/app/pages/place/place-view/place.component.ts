@@ -127,7 +127,7 @@ export class PlaceComponent implements OnInit {
   createRoot() {
     this.canCreateRoot = true;
   }
-    
+
   close() {
     this.modalCtrl.dismiss();
   }

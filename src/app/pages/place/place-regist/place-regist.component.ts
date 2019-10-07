@@ -3,7 +3,6 @@ import { Place } from 'src/app/models/place';
 import { PlaceService } from 'src/app/services/firestore/place.service';
 import { AuthService } from 'src/app/services/firestore/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { Aria } from 'src/app/models/aria';
 import { ModalController } from '@ionic/angular';
 
@@ -19,7 +18,6 @@ export class PlaceRegistComponent implements OnInit {
   results?: google.maps.places.PlaceResult[];
   constructor(
     private modalCtrl: ModalController,
-    private router: Router,
     private placeService: PlaceService,
     private auth: AuthService,
     private snackBar: MatSnackBar,
@@ -34,7 +32,6 @@ export class PlaceRegistComponent implements OnInit {
   regist() {
     this.placeService.addPlace(this.aria.id, this.place);
     this.openSnackBar('registered');
-    this.router.navigate(['/place/placeList']);
   }
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {
