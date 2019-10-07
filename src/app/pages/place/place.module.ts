@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { TopComponent } from './top/top.component';
 import { PlaceRoutingModule } from './place-routing.module';
 import { PlaceComponent } from './place-view/place.component';
 import { PlaceDetailComponent } from './place-detail/place-detail.component';
@@ -13,12 +14,16 @@ import { MaterialModule } from 'src/app/pages/place/material/material.module';
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({
+  entryComponents: [
+    PlaceRegistComponent
+  ],
   declarations: [
     PlaceComponent,
     PlaceDetailComponent,
     PlaceListComponent,
     PlaceRegistComponent,
     PlaceDestinationsComponent,
+    TopComponent,
   ],
   imports: [
     CommonModule,

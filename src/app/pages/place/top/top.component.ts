@@ -4,7 +4,7 @@ import { AriaRegistComponent } from 'src/app/pages/place/parts/aria-regist/aria-
 import { AriaService } from 'src/app/services/firestore/aria.service';
 import { Observable } from 'rxjs';
 import { Aria } from 'src/app/models/aria';
-import { PlaceRegistComponent } from '../place/place-regist/place-regist.component';
+import { PlaceRegistComponent } from '../place-regist/place-regist.component';
 
 @Component({
   selector: 'app-top',

@@ -24,6 +24,9 @@ const components = [
 ];
 
 @NgModule({
+  entryComponents: [
+    AriaRegistComponent
+  ],
   declarations: [components],
   exports: [components],
   imports: [CommonModule, FormsModule, MaterialModule, IonicModule.forRoot()]

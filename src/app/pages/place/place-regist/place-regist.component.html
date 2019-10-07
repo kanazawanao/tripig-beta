@@ -1,19 +1,20 @@
-<ion-content>
-  <div>
-    <app-map
-      [place]="place"
-      [results]="results"
-      (setEvent)="placeSet($event)"
-      (searchEvent)="resultsSet($event)"
-    ></app-map>
-    <button
-      mat-button
-      type="button"
-      aria-label="regist" 
-      (click)="regist()">
-      <mat-icon>done</mat-icon>
-      regist
-    </button>
-    <app-search-result [results]="results"></app-search-result>
-  </div>
+<ion-content fullscreen>
+  <button mat-button (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <app-map
+    [place]="place"
+    [results]="results"
+    (setEvent)="placeSet($event)"
+    (searchEvent)="resultsSet($event)"
+  ></app-map>
+  <button
+    mat-button
+    type="button"
+    aria-label="regist" 
+    (click)="regist()">
+    <mat-icon>done</mat-icon>
+    regist
+  </button>
+  <app-search-result [results]="results"></app-search-result>
 </ion-content>
