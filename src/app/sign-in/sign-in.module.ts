@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInRoutingModule } from './sign-in-routing.module';
 import { SignInComponent } from './sign-in.component';
 import { MaterialModule } from 'src/app/material/material.module';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [SignInComponent],
@@ -13,7 +14,8 @@ import { MaterialModule } from 'src/app/material/material.module';
     SignInRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    IonicModule.forRoot(),
   ]
 })
 export class SignInModule {}
