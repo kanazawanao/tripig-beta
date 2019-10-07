@@ -8,50 +8,54 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Prefecture } from 'src/app/pages/place/parts/prefecture/prefecture';
 import { AuthService } from './auth.service';
+import { Aria } from 'src/app/models/aria';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlaceService {
-  private collection: AngularFirestoreCollection<Place>;
+  private collection: AngularFirestoreCollection<Aria>;
   userId = '';
   constructor(private auth: AuthService, private afStore: AngularFirestore) {
     this.userId = this.auth.userId;
     this.collection = this.afStore
       .collection('users')
       .doc(this.userId)
-      .collection<Place>('places');
+      .collection<Aria>('aria');
   }
 
-  addPlace(place: Place): void {
-    console.log(place);
+  addPlace(ariaId: string, place: Place): void {
     const id = (place.id = this.afStore.createId());
     this.collection
+      .doc(ariaId)
+      .collection<Place>('place')
       .doc(id)
       .set(Object.assign({}, JSON.parse(JSON.stringify(place))));
   }
 
-  updatePlace(place: Place) {
+  updatePlace(ariaId: string, place: Place) {
     this.collection
+      .doc(ariaId)
+      .collection<Place>('place')
       .doc(place.id)
       .update(Object.assign({}, JSON.parse(JSON.stringify(place))));
   }
 
-  getAllPlace(): Observable<Place[]> {
-    return this.collection.valueChanges();
-  }
-
-  searchPlacesByUserId(userId: string): Observable<Place[]> {
+  getAllPlace(ariaId: string): Observable<Place[]> {
     return this.collection
-      .valueChanges()
-      .pipe(map(p => p.filter(i => i.uId === userId)));
+      .doc(ariaId)
+      .collection<Place>('place')
+      .valueChanges();
   }
 
   searchPlaces(
+    ariaId: string,
     condition: Place,
     prefectures: Prefecture[]
   ): Observable<Place[]> {
     return this.collection
+      .doc(ariaId)
+      .collection<Place>('place')
       .valueChanges()
       .pipe(
         map(p =>
@@ -74,7 +78,11 @@ export class PlaceService {
       );
   }
 
-  deletePlace(place: Place) {
-    this.collection.doc(place.id).delete();
+  deletePlace(ariaId: string, place: Place) {
+    this.collection
+      .doc(ariaId)
+      .collection<Place>('place')
+      .doc(place.id)
+      .delete();
   }
 }

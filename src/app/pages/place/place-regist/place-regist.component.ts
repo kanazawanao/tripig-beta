@@ -1,9 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { Place } from 'src/app/models/place';
 import { PlaceService } from 'src/app/services/firestore/place.service';
 import { AuthService } from 'src/app/services/firestore/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Aria } from 'src/app/models/aria';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-place-regist',
@@ -11,10 +13,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./place-regist.component.scss']
 })
 export class PlaceRegistComponent implements OnInit {
+  @Input() aria: Aria = new Aria();
   processName = 'regist';
   place: Place = new Place();
   results?: google.maps.places.PlaceResult[];
   constructor(
+    private modalCtrl: ModalController,
     private router: Router,
     private placeService: PlaceService,
     private auth: AuthService,
@@ -24,10 +28,11 @@ export class PlaceRegistComponent implements OnInit {
     this.place.uId = this.auth.userId;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   regist() {
-    this.placeService.addPlace(this.place);
+    this.placeService.addPlace(this.aria.id, this.place);
     this.openSnackBar('registered');
     this.router.navigate(['/place/placeList']);
   }
@@ -42,5 +47,9 @@ export class PlaceRegistComponent implements OnInit {
   resultsSet(results: google.maps.places.PlaceResult[]) {
     this.results = results;
     this.detector.detectChanges();
+  }
+  
+  close() {
+    this.modalCtrl.dismiss();
   }
 }

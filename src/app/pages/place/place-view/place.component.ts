@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Place } from 'src/app/models/place';
 import { Prefecture } from 'src/app/pages/place/parts/prefecture/prefecture';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PlaceService } from 'src/app/services/firestore/place.service';
 import { AuthService } from 'src/app/services/firestore/auth.service';
 import { Observable } from 'rxjs';
+import { Aria } from 'src/app/models/aria';
 
 @Component({
   selector: 'app-place',
@@ -12,6 +13,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./place.component.scss']
 })
 export class PlaceComponent implements OnInit {
+  @Input() aria: Aria = new Aria();
   processName = 'update';
   placeSearchCondition: Place = new Place();
   prefectures: Prefecture[] = [];
@@ -35,7 +37,7 @@ export class PlaceComponent implements OnInit {
   }
 
   delete(place: Place) {
-    this.placeService.deletePlace(place);
+    this.placeService.deletePlace(this.aria.id, place);
     this.destinations.forEach((d, index) => {
       if (d.id === place.id) {
         this.destinations.splice(index, 1);
@@ -46,7 +48,7 @@ export class PlaceComponent implements OnInit {
   }
 
   update(place: Place) {
-    this.placeService.updatePlace(place);
+    this.placeService.updatePlace(this.aria.id, place);
     this.selectedPlace = undefined;
     this.updateDestination(place);
     this.openSnackBar('updated');
@@ -86,6 +88,7 @@ export class PlaceComponent implements OnInit {
   search() {
     // TODO: 検索中であることを表示できたら嬉しい
     this.places$ = this.placeService.searchPlaces(
+      this.aria.id,
       this.placeSearchCondition,
       this.prefectures
     );
@@ -99,6 +102,7 @@ export class PlaceComponent implements OnInit {
     this.places$ = undefined;
     this.destinations = [];
     const allPlaces$ = this.placeService.searchPlaces(
+      this.aria.id,
       this.placeSearchCondition,
       this.prefectures
     );

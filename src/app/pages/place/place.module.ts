@@ -10,6 +10,7 @@ import { PlaceRegistComponent } from './place-regist/place-regist.component';
 import { PlaceDestinationsComponent } from './place-destinations/place-destinations.component';
 import { PartsModule } from './parts/parts.module';
 import { MaterialModule } from 'src/app/pages/place/material/material.module';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MaterialModule } from 'src/app/pages/place/material/material.module';
     PlaceRoutingModule,
     FormsModule,
     PartsModule,
-    MaterialModule
+    MaterialModule,
+    IonicModule.forRoot()
   ]
 })
 export class PlaceModule { }

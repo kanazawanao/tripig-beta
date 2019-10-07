@@ -9,7 +9,7 @@ import { Place } from 'src/app/models/place';
 export class SearchResultComponent implements OnInit {
   @Input() results?: google.maps.places.PlaceResult[];
   get places(): Place[] {
-    let placeList: Place[] = [];
+    const placeList: Place[] = [];
     if (this.results) {
       for (const result of this.results) {
         const place = new Place();
