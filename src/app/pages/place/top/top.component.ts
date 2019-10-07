@@ -5,6 +5,7 @@ import { AriaService } from 'src/app/services/firestore/aria.service';
 import { Observable } from 'rxjs';
 import { Aria } from 'src/app/models/aria';
 import { PlaceRegistComponent } from '../place-regist/place-regist.component';
+import { PlaceComponent } from '../place-view/place.component';
 
 @Component({
   selector: 'app-top',
@@ -32,6 +33,16 @@ export class TopComponent implements OnInit {
   async addPlace(aria: Aria) {
     const modal = await this.modalController.create({
       component: PlaceRegistComponent,
+      componentProps: {
+        'aria': aria
+      }
+    });
+    return await modal.present();
+  }
+
+  async display(aria: Aria){
+    const modal = await this.modalController.create({
+      component: PlaceComponent,
       componentProps: {
         'aria': aria
       }

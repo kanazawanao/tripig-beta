@@ -1,12 +1,12 @@
 <ion-content>
-  <ion-fab vertical="center" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="add()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-list *ngFor="let aria of arias$ | async">
     <ion-item>
-      <ion-label>{{ aria.ariaName }}</ion-label>
+      <button mat-button (click)="display(aria)">{{ aria.ariaName }}</button>
       <button mat-button (click)="addPlace(aria)">
         <ion-icon name="add"></ion-icon>
       </button>

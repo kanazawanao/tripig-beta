@@ -6,6 +6,7 @@ import { PlaceService } from 'src/app/services/firestore/place.service';
 import { AuthService } from 'src/app/services/firestore/auth.service';
 import { Observable } from 'rxjs';
 import { Aria } from 'src/app/models/aria';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-place',
@@ -22,6 +23,7 @@ export class PlaceComponent implements OnInit {
   places$?: Observable<Place[]>;
   canCreateRoot = false;
   constructor(
+    private modalCtrl: ModalController,
     private placeService: PlaceService,
     private auth: AuthService,
     private snackBar: MatSnackBar
@@ -124,5 +126,9 @@ export class PlaceComponent implements OnInit {
 
   createRoot() {
     this.canCreateRoot = true;
+  }
+    
+  close() {
+    this.modalCtrl.dismiss();
   }
 }

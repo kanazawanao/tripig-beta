@@ -48,7 +48,7 @@ export class PlaceRegistComponent implements OnInit {
     this.results = results;
     this.detector.detectChanges();
   }
-  
+
   close() {
     this.modalCtrl.dismiss();
   }
