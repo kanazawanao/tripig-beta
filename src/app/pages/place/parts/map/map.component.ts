@@ -32,7 +32,7 @@ export class MapComponent implements OnInit {
   placeOptions = PLACETYPES;
   priceOptions = PRICELEVELS;
   RADIUS = 1000;
-  placeSelected: PlaceType = new PlaceType();
+  placeSelected: PlaceType = {cd: 'restaurant', name: 'レストラン'};
   priceSelected: PriceLevel = new PriceLevel();
   constructor(private snackBar: MatSnackBar) {}
   ngOnInit() {
@@ -49,6 +49,7 @@ export class MapComponent implements OnInit {
         this.place.place = this.placeText;
         this.place.category = result[0].types;
         this.place.addr = result[0].formatted_address;
+        console.log(result[0].address_components);
         this.place.prefecture = result[0].address_components.filter(
           component => {
             return component.types.indexOf('administrative_area_level_1') > -1;
