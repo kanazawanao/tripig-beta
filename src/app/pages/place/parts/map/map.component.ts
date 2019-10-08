@@ -10,6 +10,8 @@ import {
 import { Place } from 'src/app/models/place';
 import { PlaceType, PLACETYPES } from './place-types';
 import { PRICELEVELS, PriceLevel } from './price-level';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Aria } from 'src/app/models/aria';
 
 @Component({
   selector: 'app-map',
@@ -17,6 +19,7 @@ import { PRICELEVELS, PriceLevel } from './price-level';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
+  @Input() aria: Aria = new Aria();
   @Input() place: Place = new Place();
   @Input() results?: google.maps.places.PlaceResult[];
   @Output() searchEvent: EventEmitter<any> = new EventEmitter();
@@ -28,10 +31,14 @@ export class MapComponent implements OnInit {
   placeText = '';
   placeOptions = PLACETYPES;
   priceOptions = PRICELEVELS;
+  RADIUS = 1000;
   placeSelected: PlaceType = new PlaceType();
   priceSelected: PriceLevel = new PriceLevel();
-  constructor() {}
-  ngOnInit() {}
+  constructor(private snackBar: MatSnackBar) {}
+  ngOnInit() {
+    this.placeText = this.aria.ariaName;
+    this.search();
+  }
 
   search() {
     const geocoder = new google.maps.Geocoder();
@@ -47,9 +54,11 @@ export class MapComponent implements OnInit {
             return component.types.indexOf('administrative_area_level_1') > -1;
           }
         )[0].long_name;
+        this.setEvent.emit(this.place);
+      } else {
+        this.openSnackBar('not found');
       }
     });
-    this.setEvent.emit(this.place);
   }
 
   setMap(latLng: google.maps.LatLng) {
@@ -76,7 +85,7 @@ export class MapComponent implements OnInit {
         maxPriceLevel: this.priceSelected.cd,
         rankBy: google.maps.places.RankBy.PROMINENCE,
         location: latLng,
-        radius: 500,
+        radius: this.RADIUS,
         type: this.placeSelected.cd
       };
       placeService.nearbySearch(request, (results, status) => {
@@ -85,5 +94,11 @@ export class MapComponent implements OnInit {
         }
       });
     }
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 2000
+    });
   }
 }

@@ -3,6 +3,7 @@
     <mat-icon>close</mat-icon>
   </button>
   <app-map
+    [aria]="aria"
     [place]="place"
     [results]="results"
     (setEvent)="placeSet($event)"

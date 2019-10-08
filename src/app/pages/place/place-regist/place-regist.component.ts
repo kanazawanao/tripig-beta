@@ -26,21 +26,23 @@ export class PlaceRegistComponent implements OnInit {
     this.place.uId = this.auth.userId;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   regist() {
     this.placeService.addPlace(this.aria.id, this.place);
     this.openSnackBar('registered');
   }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {
       duration: 2000
     });
   }
+
   placeSet(place: Place) {
     this.place = place;
   }
+
   resultsSet(results: google.maps.places.PlaceResult[]) {
     this.results = results;
     this.detector.detectChanges();

@@ -15,7 +15,9 @@ export class AriaRegistComponent implements OnInit {
     private ariaService: AriaService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.aria = new Aria();
+  }
 
   close() {
     this.modalCtrl.dismiss();

@@ -6,7 +6,7 @@
   </ion-fab>
   <ion-list *ngFor="let aria of arias$ | async">
     <ion-item>
-      <button mat-button (click)="display(aria)">{{ aria.ariaName }}</button>
+      <button mat-button (click)="display(aria)">{{ aria.title }}</button>
       <button mat-button (click)="addPlace(aria)">
         <ion-icon name="add"></ion-icon>
       </button>
