@@ -9,6 +9,7 @@ import { FilterComponent } from 'src/app/pages/place/parts/filter/filter.compone
 import { MapComponent } from 'src/app/pages/place/parts/map/map.component';
 import { SearchResultComponent } from 'src/app/pages/place/parts/search-result/search-result.component';
 import { AriaRegistComponent } from 'src/app/pages/place/parts/aria-regist/aria-regist.component';
+import { SelectedLocationsComponent } from 'src/app/pages/place/parts/selected-locations/selected-locations.component';
 import { MaterialModule } from 'src/app/pages/place/material/material.module';
 import { IonicModule } from '@ionic/angular';
 
@@ -20,12 +21,14 @@ const components = [
   SearchPrefectureComponent,
   MapComponent,
   SearchResultComponent,
-  AriaRegistComponent
+  AriaRegistComponent,
+  SelectedLocationsComponent,
 ];
 
 @NgModule({
   entryComponents: [
-    AriaRegistComponent
+    AriaRegistComponent,
+    SelectedLocationsComponent,
   ],
   declarations: [components],
   exports: [components],

@@ -1,7 +1,9 @@
 
 <ion-content>
+  <ion-list-header>Suggest</ion-list-header>
   <ion-list *ngFor="let place of places">
     <ion-item>
+      <ion-checkbox color="primary" slot="start"></ion-checkbox>
       <ion-label>{{ place.place }}</ion-label>
     </ion-item>
   </ion-list>

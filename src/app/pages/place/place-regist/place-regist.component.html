@@ -1,7 +1,14 @@
 <ion-content fullscreen>
-  <button mat-button (click)="close()">
-    <mat-icon>close</mat-icon>
-  </button>
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="close()">
+      <ion-icon name="arrow-dropleft"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="guide()">
+      <ion-icon name="rocket"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <app-map
     [aria]="aria"
     [place]="place"
