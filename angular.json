@@ -180,6 +180,43 @@
               "devServerTarget": "tripig:serve:production"
             }
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/tripig-server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": {
+                "scripts": false,
+                "styles": true
+              }
+            }
+          }
+        },
+        "app-shell": {
+          "builder": "@angular-devkit/build-angular:app-shell",
+          "options": {
+            "browserTarget": "tripig:build",
+            "serverTarget": "tripig:server",
+            "route": "shell"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "tripig:build:production",
+              "serverTarget": "tripig:server:production"
+            }
+          }
         }
       }
     }
