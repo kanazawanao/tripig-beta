@@ -21,7 +21,6 @@ export class AriaService {
       .collection<Aria>('aria');
   }
   addAria(aria: Aria): void {
-    console.log(aria);
     const id = (aria.id = this.afStore.createId());
     this.collection
       .doc(id)

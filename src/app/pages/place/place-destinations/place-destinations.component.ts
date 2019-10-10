@@ -39,7 +39,6 @@ export class PlaceDestinationsComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.destinations, event.previousIndex, event.currentIndex);
-    console.log(this.destinations);
     this.createWayoption();
   }
 }

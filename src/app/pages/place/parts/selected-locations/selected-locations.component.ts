@@ -13,7 +13,7 @@ export class SelectedLocationsComponent implements OnInit {
   ) { }
 
   ngOnInit() {}
-  
+
   close() {
     this.modalCtrl.dismiss();
   }

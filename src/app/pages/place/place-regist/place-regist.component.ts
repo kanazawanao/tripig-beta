@@ -49,7 +49,7 @@ export class PlaceRegistComponent implements OnInit {
     this.results = results;
     this.detector.detectChanges();
   }
-  
+
   async guide() {
     const selected = this.selected;
     const modal = await this.modalCtrl.create({
