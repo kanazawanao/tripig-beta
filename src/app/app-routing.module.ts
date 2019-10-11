@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'signIn',
     loadChildren: () =>
-      import('./sign-in/sign-in.module').then(m => m.SignInModule)
+      import('./pages/sign-in/sign-in.module').then(m => m.SignInModule)
   },
   {
     path: 'place',
