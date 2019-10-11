@@ -20,6 +20,9 @@ import { AuthGuard } from 'src/app/guard/auth.guard';
 import { environment } from 'src/environments/environment';
 import { MaterialModule } from 'src/app/material/material.module';
 import { HeaderComponent } from 'src/app/parts/header/header.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -39,7 +42,15 @@ import { HeaderComponent } from 'src/app/parts/header/header.component';
       enabled: environment.production
     }),
     FlexLayoutModule,
-    RouterModule
+    RouterModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [
     GooglePlus,

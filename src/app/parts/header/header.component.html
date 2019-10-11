@@ -81,6 +81,25 @@
           </button>
         </ng-template>
       </mat-menu>
+      <button mat-button [matMenuTriggerFor]="themeColor" aria-label="theme">
+        <mat-icon>format_color_fill</mat-icon>
+      </button>
+      <mat-menu #themeColor="matMenu">
+        <mat-grid-list cols="2">
+          <mat-grid-tile>
+            <button mat-mini-fab color="primary" (click)="onSetTheme('primary')"></button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-mini-fab color="secondary" (click)="onSetTheme('secondary')"></button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-mini-fab color="danger" (click)="onSetTheme('danger')"></button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-mini-fab color="light" (click)="onSetTheme('light')"></button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-menu>
     </div>
   </ion-toolbar>
 </ion-header>
