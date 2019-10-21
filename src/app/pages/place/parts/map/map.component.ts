@@ -21,7 +21,7 @@ import { Aria } from 'src/app/models/aria';
 export class MapComponent implements OnInit {
   @Input() aria: Aria = new Aria();
   @Input() place: Place = new Place();
-  @Input() results?: google.maps.places.PlaceResult[];
+  @Input() placeList: Place[] = [];
   @Output() searchEvent: EventEmitter<any> = new EventEmitter();
   @Output() setEvent: EventEmitter<any> = new EventEmitter();
   @ViewChild('mapWrapper', { static: false }) mapElement!: ElementRef;
@@ -90,7 +90,28 @@ export class MapComponent implements OnInit {
       };
       placeService.nearbySearch(request, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          this.searchEvent.emit(results);
+          for (const result of results) {
+            const place: Place = {
+              addr: result.formatted_address ? result.formatted_address : '',
+              selected: false,
+              place: result.name,
+              category: result.types ? result.types : [],
+              gid: '',
+              id: '',
+              prefecture: result.address_components
+                ? result.address_components.filter(
+                  component => {
+                    return component.types.indexOf('administrative_area_level_1') > -1;
+                  }
+                )[0].long_name
+                : '',
+              price : 0,
+              uId: '',
+              went: false
+            };
+            this.placeList.push(place);
+          }
+          this.searchEvent.emit(this.placeList);
         }
       });
     }

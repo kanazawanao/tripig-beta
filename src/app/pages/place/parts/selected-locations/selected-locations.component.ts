@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Place } from 'src/app/models/place';
 
 @Component({
   selector: 'app-selected-locations',
@@ -7,6 +8,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./selected-locations.component.scss'],
 })
 export class SelectedLocationsComponent implements OnInit {
+  @Input() selectedPlaceList: Place[] = [];
 
   constructor(
     private modalCtrl: ModalController,
