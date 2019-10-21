@@ -16,8 +16,7 @@ export class PlaceRegistComponent implements OnInit {
   @Input() aria: Aria = new Aria();
   processName = 'regist';
   place: Place = new Place();
-  results?: google.maps.places.PlaceResult[];
-  selected: google.maps.places.PlaceResult[] = [];
+  placeList: Place[] = [];
   constructor(
     private modalCtrl: ModalController,
     private placeService: PlaceService,
@@ -45,16 +44,16 @@ export class PlaceRegistComponent implements OnInit {
     this.place = place;
   }
 
-  resultsSet(results: google.maps.places.PlaceResult[]) {
-    this.results = results;
+  resultsSet(results: Place[]) {
+    this.placeList = results;
     this.detector.detectChanges();
   }
 
   async guide() {
-    const selected = this.selected;
+    const selectedPlaceList = this.placeList.filter(p => p.selected);
     const modal = await this.modalCtrl.create({
       component: SelectedLocationsComponent,
-      componentProps: { selected }
+      componentProps: { selectedPlaceList }
     });
     return await modal.present();
   }

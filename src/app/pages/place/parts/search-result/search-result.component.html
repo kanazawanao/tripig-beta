@@ -2,8 +2,8 @@
 <ion-content>
   <ion-list *ngFor="let place of placeList">
     <ion-item>
-      <ion-checkbox color="primary" slot="start"></ion-checkbox>
-      <ion-label>{{ place.name }}</ion-label>
+      <ion-checkbox color="primary" slot="start" [(ngModel)]="place.selected"></ion-checkbox>
+      <ion-label>{{ place.place }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Place } from 'src/app/models/place';
 
 @Component({
   selector: 'app-search-result',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit {
-  @Input() placeList?: google.maps.places.PlaceResult[];
+  @Input() placeList: Place[] = [];
 
   constructor() {}
 
