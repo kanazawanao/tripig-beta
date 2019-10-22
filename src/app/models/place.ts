@@ -8,5 +8,7 @@ export class Place {
   went = false;
   price = 0;
   category: string[] = [];
-  selected  = false;
+  selected = false;
+  rating?: number;
+  latLng?: google.maps.LatLng;
 }

@@ -32,7 +32,7 @@ export class MapComponent implements OnInit {
   placeOptions = PLACETYPES;
   priceOptions = PRICELEVELS;
   RADIUS = 1000;
-  placeSelected: PlaceType = {cd: 'restaurant', name: 'レストラン'};
+  placeSelected: PlaceType = { cd: 'restaurant', name: 'レストラン' };
   priceSelected: PriceLevel = new PriceLevel();
   constructor(private snackBar: MatSnackBar) {}
   ngOnInit() {
@@ -98,14 +98,17 @@ export class MapComponent implements OnInit {
               category: result.types ? result.types : [],
               gid: '',
               id: '',
+              rating: result.rating,
+              latLng: result.geometry ? result.geometry.location : undefined,
               prefecture: result.address_components
-                ? result.address_components.filter(
-                  component => {
-                    return component.types.indexOf('administrative_area_level_1') > -1;
-                  }
-                )[0].long_name
+                ? result.address_components.filter(component => {
+                    return (
+                      component.types.indexOf('administrative_area_level_1') >
+                      -1
+                    );
+                  })[0].long_name
                 : '',
-              price : 0,
+              price: 0,
               uId: '',
               went: false
             };
