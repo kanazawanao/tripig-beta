@@ -6,7 +6,10 @@
   </ion-fab>
   <ion-list *ngFor="let place of selectedPlaceList">
     <ion-item>
-      <ion-label>{{ place.place }}</ion-label>
+      <ion-label>
+        place: {{ place.place }} rating: {{ place.rating }}
+      </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
+<div #mapWrapper id="map"></div>

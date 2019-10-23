@@ -1,11 +1,12 @@
-<ion-content fullscreen>
+<ion-content>
   <button mat-button (click)="close()">
     <mat-icon>close</mat-icon>
   </button>
-  <form #ariaForm="ngForm" class="form">
-    <mat-form-field class="full-width">
+  <form #ariaForm="ngForm">
+    <mat-form-field>
       <input
         matInput
+        color="primary"
         type="text"
         placeholder="title"
         [(ngModel)]="aria.title"
@@ -14,9 +15,10 @@
         #title="ngModel"
       />
     </mat-form-field>
-    <mat-form-field class="full-width">
+    <mat-form-field>
       <input
         matInput
+        color="primary"
         type="text"
         placeholder="aria"
         [(ngModel)]="aria.ariaName"
@@ -27,6 +29,7 @@
     </mat-form-field>
     <button
       mat-button
+      color="primary"
       type="button"
       (click)="regist()"
       [disabled]="ariaForm.invalid"
