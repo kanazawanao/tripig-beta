@@ -32,7 +32,7 @@ export class MapComponent implements OnInit {
   placeOptions = PLACETYPES;
   priceOptions = PRICELEVELS;
   RADIUS = 1000;
-  placeSelected: PlaceType = { cd: 'restaurant', name: 'レストラン' };
+  placeSelected: PlaceType = { cd: 'restaurant', name: 'レストラン', category: '' };
   priceSelected: PriceLevel = new PriceLevel();
   constructor(private snackBar: MatSnackBar) {}
   ngOnInit() {

@@ -10,6 +10,9 @@ import { Place } from 'src/app/models/place';
 export class SelectedLocationsComponent implements OnInit {
   @Input() selectedPlaceList: Place[] = [];
   @ViewChild('mapWrapper', { static: false }) mapElement!: ElementRef;
+  firstPlace: Place = new Place();
+  lastPlace: Place = new Place();
+  waypoints: google.maps.DirectionsWaypoint[] = [];
   map: google.maps.Map | null = null;
   marker?: google.maps.Marker;
   constructor(private modalCtrl: ModalController) {}
@@ -17,12 +20,13 @@ export class SelectedLocationsComponent implements OnInit {
   ngOnInit() {
     const directionService = new google.maps.DirectionsService();
     const directionsRenderer = new google.maps.DirectionsRenderer();
-    console.log(this.selectedPlaceList);
+    this.initPoints();
     if (this.selectedPlaceList[0].latLng) {
-      var request: google.maps.DirectionsRequest = {
-        origin: this.selectedPlaceList[0].latLng,
-        destination: this.selectedPlaceList[1].latLng,
-        travelMode: google.maps.TravelMode.WALKING
+      const request: google.maps.DirectionsRequest = {
+        origin: this.firstPlace.latLng,
+        destination: this.lastPlace.latLng,
+        travelMode: google.maps.TravelMode.WALKING,
+        waypoints: this.waypoints
       };
       directionService.route(request, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
@@ -33,6 +37,23 @@ export class SelectedLocationsComponent implements OnInit {
           }
         }
       });
+    }
+  }
+
+  private initPoints() {
+    if (this.selectedPlaceList.length > 0) {
+      for (let i = 0; i < this.selectedPlaceList.length; i++) {
+        if (i === 0) {
+          this.firstPlace = this.selectedPlaceList[0];
+        } else if (i === this.selectedPlaceList.length - 1) {
+          this.lastPlace = this.selectedPlaceList[i];
+        } else {
+          const p: google.maps.DirectionsWaypoint =  {
+            location: this.selectedPlaceList[i].latLng,
+          };
+          this.waypoints.push(p);
+        }
+      }
     }
   }
 
