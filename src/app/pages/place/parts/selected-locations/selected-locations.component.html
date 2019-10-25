@@ -4,10 +4,16 @@
       <ion-icon name="arrow-dropleft"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-list *ngFor="let place of selectedPlaceList">
+  <ion-list *ngFor="let place of selectedPlaceList; index as i">
     <ion-item>
       <ion-label>
-        place: {{ place.place }} rating: {{ place.rating }}
+        No: {{ i + 1 }}
+      </ion-label>
+      <ion-label>
+        place: {{ place.place }}
+      </ion-label>
+      <ion-label>
+        rating: {{ place.rating }}
       </ion-label>
     </ion-item>
   </ion-list>

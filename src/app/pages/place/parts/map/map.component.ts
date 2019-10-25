@@ -41,6 +41,7 @@ export class MapComponent implements OnInit {
   }
 
   search() {
+    this.placeList = [];
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: this.placeText }, (result, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
@@ -74,7 +75,6 @@ export class MapComponent implements OnInit {
       position: latLng,
       map: this.map
     });
-    this.searchPlace(latLng);
   }
 
   searchPlace(latLng: google.maps.LatLng) {
