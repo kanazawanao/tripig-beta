@@ -39,7 +39,7 @@
     "@ngrx/schematics": "8.4.0",
     "@ngrx/store": "8.4.0",
     "@ngrx/store-devtools": "8.4.0",
-    "@types/googlemaps": "3.37.6",
+    "@types/googlemaps": "3.38.0",
     "cordova-android": "8.1.0",
     "cordova-ios": "5.0.1",
     "cordova-plugin-googleplus": "8.1.1",
