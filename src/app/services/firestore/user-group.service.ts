@@ -7,6 +7,7 @@ import {
 import { UserGroups } from 'src/app/models/user-group';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,15 @@ export class UserGroupService {
       .set(Object.assign({}, JSON.parse(JSON.stringify(userGroups))));
   }
 
-  getUserGroup(): Observable<UserGroups | undefined> {
-    return this.document.valueChanges();
+  getUserGroup(): Observable<UserGroups> {
+    return this.document.valueChanges().pipe(
+      map(value => {
+        if (value) {
+          return value;
+        } else {
+          return new UserGroups();
+        }
+      })
+    );
   }
 }
