@@ -12,6 +12,11 @@ export const setAria: any = createAction(
   props<{ aria: Aria; }>()
 );
 
+export const setPlace: any = createAction(
+  '[Core] setPlace',
+  props<{ place: Place; }>()
+);
+
 export const setSearchedPlaceList: any = createAction(
   '[Core] setSearchedPlaceList',
   props<{ searchedPlaceList: Place[]; }>()

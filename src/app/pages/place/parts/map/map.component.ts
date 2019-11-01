@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 import { Place } from 'src/app/models/place';
@@ -16,7 +16,6 @@ export class MapComponent implements OnInit {
   @ViewChild(GoogleMap, {static: false}) map!: GoogleMap;
   @Input() aria: Aria = new Aria();
   @Input() place: Place = new Place();
-  @Output() setEvent: EventEmitter<any> = new EventEmitter();
   center: google.maps.LatLng =  new google.maps.LatLng(37.421995, -122.084092);
   markerOptions = { draggable: false };
   markerPositions: google.maps.LatLngLiteral[] = [];
@@ -71,7 +70,7 @@ export class MapComponent implements OnInit {
             return component.types.indexOf('administrative_area_level_1') > -1;
           }
         )[0].long_name;
-        this.setEvent.emit(this.place);
+        this.mapService.setPlace(this.place);
       } else {
         this.openSnackBar('not found');
       }

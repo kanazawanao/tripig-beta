@@ -14,4 +14,8 @@ export class MapService {
   setSearchedPlaceList(searchedPlaceList: Place[]) {
     this.store.dispatch(CoreActions.setSearchedPlaceList({ searchedPlaceList }));
   }
+
+  setPlace(place: Place) {
+    this.store.dispatch(CoreActions.setPlace({ place }));
+  }
 }
