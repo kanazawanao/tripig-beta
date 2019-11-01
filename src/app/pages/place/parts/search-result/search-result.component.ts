@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as FromCore from 'src/app/store';
 import { Place } from 'src/app/models/place';
 
 @Component({
@@ -7,9 +9,12 @@ import { Place } from 'src/app/models/place';
   styleUrls: ['./search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit {
-  @Input() placeList: Place[] = [];
+  placeList: Place[] = [];
+  constructor(private store: Store<FromCore.State>) {}
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.select(FromCore.getSearchedPlaceList).subscribe(list => {
+      this.placeList = JSON.parse(JSON.stringify(list));
+    });
+  }
 }

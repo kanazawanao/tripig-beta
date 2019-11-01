@@ -1,5 +1,8 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MapInfoWindow, GoogleMap } from '@angular/google-maps';
 import { ModalController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import * as FromCore from 'src/app/store';
 import { Place } from 'src/app/models/place';
 
 @Component({
@@ -8,36 +11,48 @@ import { Place } from 'src/app/models/place';
   styleUrls: ['./selected-locations.component.scss']
 })
 export class SelectedLocationsComponent implements OnInit {
-  @Input() selectedPlaceList: Place[] = [];
-  @ViewChild('mapWrapper', { static: false }) mapElement!: ElementRef;
+  @ViewChild(MapInfoWindow, {static: false}) infoWindow!: MapInfoWindow;
+  @ViewChild(GoogleMap, {static: false}) map!: GoogleMap;
+  selectedPlaceList: Place[] = [];
+  center: google.maps.LatLng =  new google.maps.LatLng(37.421995, -122.084092);
+  markerOptions = {draggable: false};
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  zoom = 16;
   firstPlace: Place = new Place();
   lastPlace: Place = new Place();
   waypoints: google.maps.DirectionsWaypoint[] = [];
-  map: google.maps.Map | null = null;
   marker?: google.maps.Marker;
-  constructor(private modalCtrl: ModalController) {}
+  constructor(
+    private modalCtrl: ModalController,
+    private store: Store<FromCore.State>,
+  ) {}
 
   ngOnInit() {
-    const directionService = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer();
-    this.initPoints();
-    if (this.selectedPlaceList[0].latLng) {
-      const request: google.maps.DirectionsRequest = {
-        origin: this.firstPlace.latLng,
-        destination: this.lastPlace.latLng,
-        travelMode: google.maps.TravelMode.WALKING,
-        waypoints: this.waypoints
-      };
-      directionService.route(request, (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK) {
-          if (this.selectedPlaceList[0].latLng) {
-            this.setMap(this.selectedPlaceList[0].latLng);
-            directionsRenderer.setMap(this.map);
-            directionsRenderer.setDirections(result);
+    this.store.select(FromCore.getSearchedPlaceList).subscribe(res => {
+      console.log(res);
+      this.selectedPlaceList = JSON.parse(JSON.stringify(res));
+      this.selectedPlaceList = this.selectedPlaceList.filter(r => r.selected);
+      const directionService = new google.maps.DirectionsService();
+      const directionsRenderer = new google.maps.DirectionsRenderer();
+      this.initPoints();
+      if (this.selectedPlaceList[0].latLng) {
+        const request: google.maps.DirectionsRequest = {
+          origin: this.firstPlace.latLng,
+          destination: this.lastPlace.latLng,
+          travelMode: google.maps.TravelMode.WALKING,
+          waypoints: this.waypoints
+        };
+        directionService.route(request, (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK) {
+            if (this.selectedPlaceList[0].latLng) {
+              this.setMap(this.selectedPlaceList[0].latLng);
+              directionsRenderer.setMap(this.map._googleMap);
+              directionsRenderer.setDirections(result);
+            }
           }
-        }
-      });
-    }
+        });
+      }
+    });
   }
 
   private initPoints() {
@@ -58,18 +73,8 @@ export class SelectedLocationsComponent implements OnInit {
   }
 
   setMap(latLng: google.maps.LatLng) {
-    const mapOptions: google.maps.MapOptions = {
-      center: latLng,
-      zoom: 16,
-      fullscreenControl: false,
-      mapTypeControl: false,
-      streetViewControl: false
-    };
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.marker = new google.maps.Marker({
-      position: latLng,
-      map: this.map
-    });
+    this.center = latLng;
+    this.markerPositions.push(latLng.toJSON());
   }
 
   close() {

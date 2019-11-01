@@ -20,3 +20,4 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 export const selectCore = (state: State) => state.core;
 export const getThemeColor = createSelector(selectCore, fromCore.getThemeColor);
 export const getAria = createSelector(selectCore, fromCore.getAria);
+export const getSearchedPlaceList = createSelector(selectCore, fromCore.getSearchedPlaceList);

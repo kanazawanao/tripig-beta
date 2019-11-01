@@ -16,7 +16,6 @@ export class PlaceRegistComponent implements OnInit {
   @Input() aria: Aria = new Aria();
   processName = 'regist';
   place: Place = new Place();
-  placeList: Place[] = [];
   constructor(
     private modalCtrl: ModalController,
     private placeService: PlaceService,
@@ -44,16 +43,9 @@ export class PlaceRegistComponent implements OnInit {
     this.place = place;
   }
 
-  resultsSet(results: Place[]) {
-    this.placeList = results;
-    this.detector.detectChanges();
-  }
-
   async guide() {
-    const selectedPlaceList = this.placeList.filter(p => p.selected);
     const modal = await this.modalCtrl.create({
-      component: SelectedLocationsComponent,
-      componentProps: { selectedPlaceList }
+      component: SelectedLocationsComponent
     });
     return await modal.present();
   }

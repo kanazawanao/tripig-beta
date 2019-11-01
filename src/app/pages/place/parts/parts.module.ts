@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { SelectPrefecturesComponent } from 'src/app/pages/place/parts/prefecture/select-prefectures/select-prefectures.component';
 import { SearchPrefectureComponent } from 'src/app/pages/place/parts/prefecture/search-prefecture/search-prefecture.component';
 import { SelectCategoryComponent } from 'src/app/pages/place/parts/select-category/select-category.component';
@@ -32,6 +33,12 @@ const components = [
   ],
   declarations: [components],
   exports: [components],
-  imports: [CommonModule, FormsModule, MaterialModule, IonicModule.forRoot()]
+  imports: [
+    CommonModule,
+    FormsModule,
+    MaterialModule,
+    IonicModule.forRoot(),
+    GoogleMapsModule
+  ]
 })
 export class PartsModule {}

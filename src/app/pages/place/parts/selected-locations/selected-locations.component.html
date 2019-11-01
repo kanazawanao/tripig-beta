@@ -1,4 +1,15 @@
-<ion-content fullscreen>
+<google-map height="400px"
+  width="750px"
+  [center]="center"
+  [zoom]="zoom">
+  <map-marker #marker
+    *ngFor="let markerPosition of markerPositions"
+    [position]="markerPosition"
+    [options]="markerOptions">
+  </map-marker>
+  <map-info-window>Info Window content</map-info-window>
+</google-map>
+<ion-content>
   <ion-fab vertical="top" horizontal="start" slot="fixed">
     <ion-fab-button (click)="close()">
       <ion-icon name="arrow-dropleft"></ion-icon>
@@ -18,4 +29,3 @@
     </ion-item>
   </ion-list>
 </ion-content>
-<div #mapWrapper id="map"></div>

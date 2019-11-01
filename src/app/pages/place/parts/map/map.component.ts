@@ -1,17 +1,10 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ElementRef
-} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 import { Place } from 'src/app/models/place';
 import { PlaceType, PLACETYPES } from './place-types';
-import { PRICELEVELS, PriceLevel } from './price-level';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Aria } from 'src/app/models/aria';
+import { MapService } from './map.service';
 
 @Component({
   selector: 'app-map',
@@ -19,29 +12,52 @@ import { Aria } from 'src/app/models/aria';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
+  @ViewChild(MapInfoWindow, {static: false}) infoWindow!: MapInfoWindow;
+  @ViewChild(GoogleMap, {static: false}) map!: GoogleMap;
   @Input() aria: Aria = new Aria();
   @Input() place: Place = new Place();
-  @Input() placeList: Place[] = [];
-  @Output() searchEvent: EventEmitter<any> = new EventEmitter();
   @Output() setEvent: EventEmitter<any> = new EventEmitter();
-  @ViewChild('mapWrapper', { static: false }) mapElement!: ElementRef;
-  map?: google.maps.Map;
-  marker?: google.maps.Marker;
-  nextPageToken = '';
+  center: google.maps.LatLng =  new google.maps.LatLng(37.421995, -122.084092);
+  markerOptions = { draggable: false };
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  zoom = 16;
+  display?: google.maps.LatLngLiteral;
   placeText = '';
   placeOptions = PLACETYPES;
-  priceOptions = PRICELEVELS;
   RADIUS = 1000;
   placeSelected: PlaceType = { cd: 'restaurant', name: 'レストラン', category: '' };
-  priceSelected: PriceLevel = new PriceLevel();
-  constructor(private snackBar: MatSnackBar) {}
+
+  constructor(
+    private mapService: MapService,
+    private snackBar: MatSnackBar
+  ) {}
+
   ngOnInit() {
     this.placeText = this.aria.ariaName;
     this.search();
   }
 
+  onMapClick(event: google.maps.MouseEvent) {
+    this.addMarker(event.latLng);
+  }
+
+  addMarker(latLng: google.maps.LatLng) {
+    this.markerPositions.push(latLng.toJSON());
+  }
+
+  move(event: google.maps.MouseEvent) {
+    this.display = event.latLng.toJSON();
+  }
+
+  openInfoWindow(marker: MapMarker) {
+    this.infoWindow.open(marker);
+  }
+
+  removeLastMarker() {
+    this.markerPositions.pop();
+  }
+
   search() {
-    this.placeList = [];
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: this.placeText }, (result, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
@@ -63,26 +79,15 @@ export class MapComponent implements OnInit {
   }
 
   setMap(latLng: google.maps.LatLng) {
-    const mapOptions: google.maps.MapOptions = {
-      center: latLng,
-      zoom: 16,
-      fullscreenControl: false,
-      mapTypeControl: false,
-      streetViewControl: false
-    };
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.marker = new google.maps.Marker({
-      position: latLng,
-      map: this.map
-    });
+    this.center = latLng;
+    this.addMarker(latLng);
   }
 
   searchPlace(latLng: google.maps.LatLng) {
     if (this.map) {
-      const placeService = new google.maps.places.PlacesService(this.map);
+      const placeList: Place[] = [];
+      const placeService = new google.maps.places.PlacesService(this.map._googleMap);
       const request: google.maps.places.PlaceSearchRequest = {
-        minPriceLevel: 0,
-        maxPriceLevel: this.priceSelected.cd,
         rankBy: google.maps.places.RankBy.PROMINENCE,
         location: latLng,
         radius: this.RADIUS,
@@ -112,9 +117,9 @@ export class MapComponent implements OnInit {
               uId: '',
               went: false
             };
-            this.placeList.push(place);
+            placeList.push(place);
           }
-          this.searchEvent.emit(this.placeList);
+          this.mapService.setSearchedPlaceList(placeList);
         }
       });
     }

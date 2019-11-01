@@ -12,9 +12,7 @@
   <app-map
     [aria]="aria"
     [place]="place"
-    [placeList]="placeList"
     (setEvent)="placeSet($event)"
-    (searchEvent)="resultsSet($event)"
   ></app-map>
   <button
     mat-button
@@ -24,5 +22,5 @@
     <mat-icon>done</mat-icon>
     regist
   </button>
-  <app-search-result [placeList]="placeList"></app-search-result>
+  <app-search-result></app-search-result>
 </ion-content>
