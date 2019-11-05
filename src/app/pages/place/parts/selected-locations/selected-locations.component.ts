@@ -46,7 +46,7 @@ export class SelectedLocationsComponent implements OnInit {
           if (status === google.maps.DirectionsStatus.OK) {
             if (this.selectedPlaceList[0].latLng) {
               this.setMap(this.selectedPlaceList[0].latLng);
-              directionsRenderer.setMap(this.map._googleMap);
+              directionsRenderer.setMap(this.map.data.getMap());
               directionsRenderer.setDirections(result);
             }
           }

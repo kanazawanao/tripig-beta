@@ -23,8 +23,8 @@ export class MapComponent implements OnInit {
   display?: google.maps.LatLngLiteral;
   placeText = '';
   placeOptions = PLACETYPES;
-  RADIUS = 1000;
-  placeSelected: PlaceType = { cd: 'restaurant', name: 'レストラン', category: '' };
+  RADIUS = 50000;
+  placeSelected: PlaceType = { cd: '', name: '', category: '' };
 
   constructor(
     private mapService: MapService,
@@ -85,7 +85,7 @@ export class MapComponent implements OnInit {
   searchPlace(latLng: google.maps.LatLng) {
     if (this.map) {
       const placeList: Place[] = [];
-      const placeService = new google.maps.places.PlacesService(this.map._googleMap);
+      const placeService = new google.maps.places.PlacesService(this.map.data.getMap());
       const request: google.maps.places.PlaceSearchRequest = {
         rankBy: google.maps.places.RankBy.PROMINENCE,
         location: latLng,
